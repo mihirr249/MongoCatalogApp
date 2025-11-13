@@ -158,10 +158,15 @@ async def add_review(sku: str, review: Review):
 
 @app.patch("/products/{sku}/reviews/{review_id}", response_model=ProductOut)
 async def update_review_positional(sku: str, review_id: str, body: ReviewUpdate):
+    """
+    Update a single review in a product using the positional operator ($)."""
     return products.update_review_positional(sku, review_id, body.model_dump(exclude_none=True))
 
 @app.patch("/products/{sku}/reviews/arrayfilters", response_model=ProductOut)
 async def patch_review_with_arrayfilter(sku: str, body: ReviewArrayFilterUpdate):
+    """
+    Update reviews in a product using MongoDB arrayFilters.
+    """
     return products.update_review_array_filters(
         sku,
         body.filter_criteria,
